@@ -11,6 +11,7 @@
 
 
 Μπορείτε να την κατεβάσετε από τους ακόλουθους υπερσύνδεσμους:
+- [github](https://github.com/g-theodoroy/bathmologia/releases/download/v0.0/bathmologia.jar)
 - [dropbox](https://www.dropbox.com/s/k1vexiw9ojrdhgz/bathmologia.jar?dl=0)
 - [drive.google](https://drive.google.com/file/d/0B2ACFOVDi2ORZjYxRmNCQ2FaOVU/view?usp=sharing)
 
