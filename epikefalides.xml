@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epikefalides>
+	<arxeio name="tmimata">
+		<ep1>Αριθμός μητρώου</ep1>
+		<ep2>Επώνυμο μαθητή</ep2>
+		<ep3>Όνομα μαθητή</ep3>
+		<ep4>Όνομα πατέρα</ep4>
+		<ep5>Τμήματα</ep5>
+	</arxeio>
+	<arxeio name="anatheseis">
+		<ep1>Επώνυμο</ep1>
+		<ep2>Όνομα</ep2>
+		<ep3>Τμήμα</ep3>
+		<ep4>Ονομασία μαθήματος</ep4>
+		<ep5></ep5>
+	</arxeio>
+	<arxeio name="sentonia">
+		<ep1>Αριθμός μητρώου</ep1>
+		<ep2>Όνομα μαθητή</ep2>
+		<ep3></ep3>
+		<ep4></ep4>
+		<ep5></ep5>
+	</arxeio>
+</epikefalides>
