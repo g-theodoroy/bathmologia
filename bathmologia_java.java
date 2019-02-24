@@ -1633,7 +1633,7 @@ public class bathmologia_java extends JFrame {
 							// ΑΝ ΔΕΝ ΒΡΩ ΟΛΕΣ ΤΙΣ ΣΤΗΛΕΣ
 							// ----------------------------------------------------------------
 							if (stiles.size() < 5) {
-								mystr = "Δυστυχώς υπάρχει πρόβλημα μα τα στοιχεία του αρχείου των Τμημάτων του μαθητή.\nΔεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\nΕπικοινωνείστε με τον προγραμματιστή...";
+								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου των Τμημάτων του μαθητή. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τα τμήματα μαθητή.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
 								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
@@ -1740,7 +1740,7 @@ public class bathmologia_java extends JFrame {
 							// ΑΝ ΔΕΝ ΒΡΩ ΟΛΕΣ ΤΙΣ ΣΤΗΛΕΣ
 							// ----------------------------------------------------------------
 							if (stiles.size() < 4) {
-								mystr = "Δυστυχώς υπάρχει πρόβλημα μα τα στοιχεία του αρχείου των Αναθέσεων.\nΔεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\nΕπικοινωνείστε με τον προγραμματιστή...";
+								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου των αναθέσεων. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις αναθέσεις των καθηγητών.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
 								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
@@ -1814,8 +1814,8 @@ public class bathmologia_java extends JFrame {
 									// do something with an empty row
 									continue;
 								}
-								for (int j = 0; j < row.getLastCellNum(); j++) {
-									Cell cell = row.getCell(j);
+								for (int y = 0; y < row.getLastCellNum(); y++) {
+									Cell cell = row.getCell(y);
 									if (cell == null) {
 										// do something with an empty cell
 										continue;
@@ -1823,14 +1823,14 @@ public class bathmologia_java extends JFrame {
 									if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
 										// System.out.println(cell.getStringCellValue());
 										if (cell.getStringCellValue().equals(epikefalides1.item(2).getTextContent())) {
-											stiles.add(j);
+											stiles.add(y);
 										} else if (cell.getStringCellValue()
 												.equals(epikefalides2.item(2).getTextContent())) {
-											stiles.add(j);
+											stiles.add(y);
 										}
 									}
 									if (stiles.size() >= 2) {
-										firstcol = j + 1;
+										firstcol = y + 1;
 										break;
 									}
 								}
@@ -1843,7 +1843,7 @@ public class bathmologia_java extends JFrame {
 							// ΑΝ ΔΕΝ ΒΡΩ ΟΛΕΣ ΤΙΣ ΣΤΗΛΕΣ
 							// ----------------------------------------------------------------
 							if (stiles.size() < 2) {
-								mystr = "Δυστυχώς υπάρχει πρόβλημα μα τα στοιχεία του αρχείου Βαθμολογιών.\nΔεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\nΕπικοινωνείστε με τον προγραμματιστή...";
+								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Α τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
 								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
@@ -1936,6 +1936,68 @@ public class bathmologia_java extends JFrame {
 							wb = WorkbookFactory.create(inp);
 							sheet = wb.getSheetAt(0);
 
+							// ΕΥΡΕΣΗ ΤΩΝ ΣΤΗΛΩΝ ΜΕ ΤΑ ΣΤΟΙΧΕΙΑ
+							stiles.clear();
+							startrow = 0;
+							for (int i = 0; i < sheet.getLastRowNum(); i++) {
+								Row row = sheet.getRow(i);
+								if (row == null) {
+									// do something with an empty row
+									continue;
+								}
+								for (int y = 0; y < row.getLastCellNum(); y++) {
+									Cell cell = row.getCell(y);
+									if (cell == null) {
+										// do something with an empty cell
+										continue;
+									}
+									if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+										// System.out.println(cell.getStringCellValue());
+										if (cell.getStringCellValue().equals(epikefalides1.item(2).getTextContent())) {
+											stiles.add(y);
+										} else if (cell.getStringCellValue()
+												.equals(epikefalides2.item(2).getTextContent())) {
+											stiles.add(y);
+										}
+									}
+									if (stiles.size() >= 2) {
+										firstcol = y + 1;
+										break;
+									}
+								}
+								if (stiles.size() >= 2) {
+									lessonsrow = i;
+									startrow = i + 1;
+									break;
+								}
+							}
+							// ΑΝ ΔΕΝ ΒΡΩ ΟΛΕΣ ΤΙΣ ΣΤΗΛΕΣ
+							// ----------------------------------------------------------------
+							if (stiles.size() < 2) {
+								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Β τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
+								textArea.setText(mystr);
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+										JOptionPane.ERROR_MESSAGE, null);
+								return;
+							}
+
+							if (stiles.size() == 2) {
+								System.out.println("");
+								System.out.println("arxeio : " + doc.getElementsByTagName("arxeio").item(2)
+										.getAttributes().getNamedItem("name").getNodeValue());
+								System.out.println("ep1 : " + epikefalides1.item(2).getTextContent() + "\t στήλη : "
+										+ stiles.get(0).toString());
+								System.out.println("ep2 : " + epikefalides2.item(2).getTextContent() + "\t στήλη : "
+										+ stiles.get(1).toString());
+								System.out.println("αρχική σειρα δεδομένων : " + startrow);
+							}
+							// System.out.println(stiles);
+							// System.out.println(startrow);
+							// System.out.println(startcol);
+							// System.out.println( "rows =" +
+							// sheet.getLastRowNum());
+
+							
 							x = startrow;
 							while (x <= sheet.getLastRowNum()) {
 								if (sheet.getRow(x).getCell((int) stiles.get(0)).getCellType() == is_numeric) {
@@ -1998,6 +2060,68 @@ public class bathmologia_java extends JFrame {
 							wb = WorkbookFactory.create(inp);
 							sheet = wb.getSheetAt(0);
 
+							// ΕΥΡΕΣΗ ΤΩΝ ΣΤΗΛΩΝ ΜΕ ΤΑ ΣΤΟΙΧΕΙΑ
+							stiles.clear();
+							startrow = 0;
+							for (int i = 0; i < sheet.getLastRowNum(); i++) {
+								Row row = sheet.getRow(i);
+								if (row == null) {
+									// do something with an empty row
+									continue;
+								}
+								for (int y = 0; y < row.getLastCellNum(); y++) {
+									Cell cell = row.getCell(y);
+									if (cell == null) {
+										// do something with an empty cell
+										continue;
+									}
+									if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+										// System.out.println(cell.getStringCellValue());
+										if (cell.getStringCellValue().equals(epikefalides1.item(2).getTextContent())) {
+											stiles.add(y);
+										} else if (cell.getStringCellValue()
+												.equals(epikefalides2.item(2).getTextContent())) {
+											stiles.add(y);
+										}
+									}
+									if (stiles.size() >= 2) {
+										firstcol = y + 1;
+										break;
+									}
+								}
+								if (stiles.size() >= 2) {
+									lessonsrow = i;
+									startrow = i + 1;
+									break;
+								}
+							}
+							// ΑΝ ΔΕΝ ΒΡΩ ΟΛΕΣ ΤΙΣ ΣΤΗΛΕΣ
+							// ----------------------------------------------------------------
+							if (stiles.size() < 2) {
+								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Γ τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
+								textArea.setText(mystr);
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+										JOptionPane.ERROR_MESSAGE, null);
+								return;
+							}
+
+							if (stiles.size() == 2) {
+								System.out.println("");
+								System.out.println("arxeio : " + doc.getElementsByTagName("arxeio").item(2)
+										.getAttributes().getNamedItem("name").getNodeValue());
+								System.out.println("ep1 : " + epikefalides1.item(2).getTextContent() + "\t στήλη : "
+										+ stiles.get(0).toString());
+								System.out.println("ep2 : " + epikefalides2.item(2).getTextContent() + "\t στήλη : "
+										+ stiles.get(1).toString());
+								System.out.println("αρχική σειρα δεδομένων : " + startrow);
+							}
+							// System.out.println(stiles);
+							// System.out.println(startrow);
+							// System.out.println(startcol);
+							// System.out.println( "rows =" +
+							// sheet.getLastRowNum());
+
+							
 							x = startrow;
 							while (x <= sheet.getLastRowNum()) {
 								if (sheet.getRow(x).getCell((int) stiles.get(0)).getCellType() == is_numeric) {
@@ -2061,6 +2185,68 @@ public class bathmologia_java extends JFrame {
 								inp = new FileInputStream(myfile2open);
 								wb = WorkbookFactory.create(inp);
 								sheet = wb.getSheetAt(0);
+								
+								// ΕΥΡΕΣΗ ΤΩΝ ΣΤΗΛΩΝ ΜΕ ΤΑ ΣΤΟΙΧΕΙΑ
+								stiles.clear();
+								startrow = 0;
+								for (int i = 0; i < sheet.getLastRowNum(); i++) {
+									Row row = sheet.getRow(i);
+									if (row == null) {
+										// do something with an empty row
+										continue;
+									}
+									for (int y = 0; y < row.getLastCellNum(); y++) {
+										Cell cell = row.getCell(y);
+										if (cell == null) {
+											// do something with an empty cell
+											continue;
+										}
+										if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+											// System.out.println(cell.getStringCellValue());
+											if (cell.getStringCellValue().equals(epikefalides1.item(2).getTextContent())) {
+												stiles.add(y);
+											} else if (cell.getStringCellValue()
+													.equals(epikefalides2.item(2).getTextContent())) {
+												stiles.add(y);
+											}
+										}
+										if (stiles.size() >= 2) {
+											firstcol = y + 1;
+											break;
+										}
+									}
+									if (stiles.size() >= 2) {
+										lessonsrow = i;
+										startrow = i + 1;
+										break;
+									}
+								}
+								// ΑΝ ΔΕΝ ΒΡΩ ΟΛΕΣ ΤΙΣ ΣΤΗΛΕΣ
+								// ----------------------------------------------------------------
+								if (stiles.size() < 2) {
+									mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Δ τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
+									textArea.setText(mystr);
+									JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+											JOptionPane.ERROR_MESSAGE, null);
+									return;
+								}
+
+								if (stiles.size() == 2) {
+									System.out.println("");
+									System.out.println("arxeio : " + doc.getElementsByTagName("arxeio").item(2)
+											.getAttributes().getNamedItem("name").getNodeValue());
+									System.out.println("ep1 : " + epikefalides1.item(2).getTextContent() + "\t στήλη : "
+											+ stiles.get(0).toString());
+									System.out.println("ep2 : " + epikefalides2.item(2).getTextContent() + "\t στήλη : "
+											+ stiles.get(1).toString());
+									System.out.println("αρχική σειρα δεδομένων : " + startrow);
+								}
+								// System.out.println(stiles);
+								// System.out.println(startrow);
+								// System.out.println(startcol);
+								// System.out.println( "rows =" +
+								// sheet.getLastRowNum());
+
 
 								x = startrow;
 								while (x <= sheet.getLastRowNum()) {
