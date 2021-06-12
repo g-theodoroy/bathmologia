@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.DefaultComboBoxModel;
@@ -114,6 +115,8 @@ public class bathmologia_java extends JFrame {
 	private NodeList epikefalides3;
 	private NodeList epikefalides4;
 	private NodeList epikefalides5;
+	private NodeList logFile;
+	private NodeList configFile;
 	private Document doc;
 	private boolean esperino = false;
 
@@ -143,10 +146,20 @@ public class bathmologia_java extends JFrame {
 		// φτιάχνω log file .bathmologia.log
 		// και στέλνω εκεί την έξοδο των λαθών και του συστήματος
 		try {
+			InputStream in = getClass().getResourceAsStream("epikefalides.xml");
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+			doc = docBuilder.parse(in);
+
+			// normalize text representation
+			doc.getDocumentElement().normalize();
+			
+			logFile = doc.getElementsByTagName("logFile");
+
 			// βρίσκω το workdir
 			workdir = new File(".").getAbsolutePath().substring(0, new File(".").getAbsolutePath().length() - 2);
 			// δημιουργία του bathmologia.log
-			PrintStream pst = new PrintStream(workdir + File.separator + ".bathmologia.log");
+			PrintStream pst = new PrintStream(workdir + File.separator + logFile.item(0).getTextContent());
 			// στέλνω τα μυνήματα στο log
 			System.setOut(pst);
 			// στέλνω τα λάθη στο log
@@ -158,6 +171,12 @@ public class bathmologia_java extends JFrame {
 			System.out.println("ΦΑΚΕΛΟΣ ΕΡΓΑΣΙΑΣ ΓΙΑ CONF - LOG : " + workdir);
 		} catch (FileNotFoundException e2) {
 			e2.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (SAXException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 
 		/**
@@ -843,7 +862,7 @@ public class bathmologia_java extends JFrame {
 								mystr = "Δυστυχώς δεν μπορώ να ανοίξω το αρχείο ελέγχου \"" + textField_11.getText()
 										+ "\"";
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Έλεγχος αρχείων!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Έλεγχος αρχείων!!!",
 										JOptionPane.ERROR_MESSAGE);
 								return;
 							}
@@ -891,7 +910,7 @@ public class bathmologia_java extends JFrame {
 
 						if (chk == true) {
 							textArea.setText(mystr);
-							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ελλιπή στοιχεία!!!",
+							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ελλιπή στοιχεία!!!",
 									JOptionPane.ERROR_MESSAGE);
 							return;
 						}
@@ -908,7 +927,7 @@ public class bathmologia_java extends JFrame {
 						// 500
 						System.out.println("\n\n\n" + mystr);
 						textArea.setText(mystr);
-						int n = JOptionPane.showConfirmDialog(contentPane, textArea, "GΘ@2015: ΕΝΑΡΞΗ ΔΙΑΔΙΚΑΣΙΑΣ",
+						int n = JOptionPane.showConfirmDialog(contentPane, textArea, "GΘ@2020: ΕΝΑΡΞΗ ΔΙΑΔΙΚΑΣΙΑΣ",
 								JOptionPane.YES_NO_OPTION);
 						// αν πατήσει ΟΧΙ σταματάω
 						if (n == JOptionPane.NO_OPTION) {
@@ -1079,7 +1098,7 @@ public class bathmologia_java extends JFrame {
 										+ " και Αποθηκεύστε το ως ''Excell 97''." + "\n\nError: " + e.getMessage();
 								textArea.setSize(400, Short.MAX_VALUE);
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 							} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {
@@ -1089,7 +1108,7 @@ public class bathmologia_java extends JFrame {
 										+ "\n\nError: " + e1.getMessage();
 								textArea.setSize(400, Short.MAX_VALUE);
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 							}
@@ -1345,7 +1364,7 @@ public class bathmologia_java extends JFrame {
 							}
 							System.out.println("\n\n\n" + mystr);
 							textArea.setText(mystr);
-							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: ΤΕΛΟΣ ΔΙΑΔΙΚΑΣΙΑΣ",
+							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: ΤΕΛΟΣ ΔΙΑΔΙΚΑΣΙΑΣ",
 									JOptionPane.INFORMATION_MESSAGE, null);
 
 						} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {
@@ -1377,7 +1396,7 @@ public class bathmologia_java extends JFrame {
 				textArea.setLineWrap(true);
 				textArea.setBackground(new Color(0, 0, 0, 0));
 				textArea.setText(mystr);
-				JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Πληροφορίες",
+				JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Πληροφορίες",
 						JOptionPane.INFORMATION_MESSAGE, null);
 			}
 		});
@@ -1523,7 +1542,7 @@ public class bathmologia_java extends JFrame {
 						}
 						if (chk == true) {
 							textArea.setText(mystr);
-							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ελλιπή στοιχεία!!!",
+							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ελλιπή στοιχεία!!!",
 									JOptionPane.ERROR_MESSAGE);
 							return;
 						}
@@ -1574,7 +1593,7 @@ public class bathmologia_java extends JFrame {
 																// in pixels,
 																// e.g. 500
 						textArea.setText(mystr);
-						int n = JOptionPane.showConfirmDialog(contentPane, textArea, "GΘ@2015: ΕΝΑΡΞΗ ΔΙΑΔΙΚΑΣΙΑΣ",
+						int n = JOptionPane.showConfirmDialog(contentPane, textArea, "GΘ@2020: ΕΝΑΡΞΗ ΔΙΑΔΙΚΑΣΙΑΣ",
 								JOptionPane.OK_CANCEL_OPTION);
 						if (n == JOptionPane.CANCEL_OPTION) {
 							return;
@@ -1635,7 +1654,7 @@ public class bathmologia_java extends JFrame {
 							if (stiles.size() < 5) {
 								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου των Τμημάτων του μαθητή. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τα τμήματα μαθητή.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 
@@ -1742,7 +1761,7 @@ public class bathmologia_java extends JFrame {
 							if (stiles.size() < 4) {
 								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου των αναθέσεων. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις αναθέσεις των καθηγητών.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 
@@ -1845,7 +1864,7 @@ public class bathmologia_java extends JFrame {
 							if (stiles.size() < 2) {
 								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Α τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 							}
@@ -1976,7 +1995,7 @@ public class bathmologia_java extends JFrame {
 							if (stiles.size() < 2) {
 								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Β τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 							}
@@ -2100,7 +2119,7 @@ public class bathmologia_java extends JFrame {
 							if (stiles.size() < 2) {
 								mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Γ τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 								textArea.setText(mystr);
-								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+								JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 										JOptionPane.ERROR_MESSAGE, null);
 								return;
 							}
@@ -2226,7 +2245,7 @@ public class bathmologia_java extends JFrame {
 								if (stiles.size() < 2) {
 									mystr = "Δυστυχώς υπάρχει πρόβλημα με τα στοιχεία του αρχείου Βαθμολογιών της Δ τάξης. Δεν βρέθηκαν όλες οι απαραίτητες στήλες με τα δεδομένα.\n\nΒεβαιωθείτε ότι έχετε επιλέξει το σωστό αρχείο με τις βαθμολογίες.\n\nΑλλιώς επικοινωνείστε με τον προγραμματιστή...";
 									textArea.setText(mystr);
-									JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+									JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 											JOptionPane.ERROR_MESSAGE, null);
 									return;
 								}
@@ -2317,7 +2336,7 @@ public class bathmologia_java extends JFrame {
 									+ "\nError: " + e.getMessage()
 									+ "\n\nΑνοίξτε το με το Excell ή το Libreoffice και Αποθηκεύστε το ως ''Excell 97''.";
 							textArea.setText(mystr);
-							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 									JOptionPane.ERROR_MESSAGE, null);
 							return;
 
@@ -2327,7 +2346,7 @@ public class bathmologia_java extends JFrame {
 							mystr = "Δυστυχώς δεν μπορώ να ανοίξω το αρχέιο xls: ''" + myfile + "'' !!!" + "\n\nError: "
 									+ e.getMessage();
 							textArea.setText(mystr);
-							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: Ωχ... Λάθος!!!",
+							JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: Ωχ... Λάθος!!!",
 									JOptionPane.ERROR_MESSAGE, null);
 							return;
 
@@ -2344,7 +2363,7 @@ public class bathmologia_java extends JFrame {
 								+ "Δημιουργία των αρχείων για τους καθηγητές. Αυτό μπορεί να διαρκέσει λίγη ... ώρα!";
 						System.out.println("\n\n\n" + mystr);
 						textArea.setText(mystr);
-						n = JOptionPane.showConfirmDialog(contentPane, textArea, "GΘ@2015: ΠΛΗΡΟΦΟΡΗΣΗ",
+						n = JOptionPane.showConfirmDialog(contentPane, textArea, "GΘ@2020: ΠΛΗΡΟΦΟΡΗΣΗ",
 								JOptionPane.OK_CANCEL_OPTION);
 						if (n == JOptionPane.CANCEL_OPTION) {
 							return;
@@ -2670,10 +2689,10 @@ public class bathmologia_java extends JFrame {
 									dataValidation = new HSSFDataValidation(addressList, dvConstraint);
 									dataValidation.setErrorStyle(DataValidation.ErrorStyle.STOP);
 									if (comboBox.getSelectedItem().toString().equals("ΠΡΟΦΟΡΙΚΟΣ")) {
-										dataValidation.createErrorBox("GΘ@2015: Έλεγχος Δεδομένων",
+										dataValidation.createErrorBox("GΘ@2020: Έλεγχος Δεδομένων",
 												"Ο προφορικός βαθμός πρέπει να είναι ακέραιος στο διάστημα 0 ως 20");
 									} else {
-										dataValidation.createErrorBox("GΘ@2015: Έλεγχος Δεδομένων",
+										dataValidation.createErrorBox("GΘ@2020: Έλεγχος Δεδομένων",
 												"Ο γραπτός βαθμός πρέπει να είναι δεκαδκός στο διάστημα 0 ως 20");
 									}
 									dataValidation.setEmptyCellAllowed(true);
@@ -2730,7 +2749,8 @@ public class bathmologia_java extends JFrame {
 										if (myrow == null)
 											myrow = sheet.createRow(idxrow);
 										for (int idxcol = 0; idxcol < 61; idxcol++) {
-											mycell = myrow.createCell(idxcol);
+											mycell = myrow.getCell(idxcol);
+											if(mycell == null) mycell = myrow.createCell(idxcol);
 											mycell.setCellStyle(unlockedCell);
 										}
 									}
@@ -2800,7 +2820,7 @@ public class bathmologia_java extends JFrame {
 								+ " αρχεία καθηγητών";
 						System.out.println("\n\n\n" + mystr);
 						textArea.setText(mystr);
-						JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2015: ΤΕΛΟΣ ΔΙΑΔΙΚΑΣΙΑΣ",
+						JOptionPane.showMessageDialog(contentPane, textArea, "GΘ@2020: ΤΕΛΟΣ ΔΙΑΔΙΚΑΣΙΑΣ",
 								JOptionPane.INFORMATION_MESSAGE, null);
 
 					}
@@ -2954,23 +2974,45 @@ public class bathmologia_java extends JFrame {
 				} else {
 					espvalue = "";
 				}
-				String data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<data>\n" + "\t<esperino>" + espvalue
-						+ "</esperino>\n" + "\t<arxA>" + textField.getText() + "</arxA>\n" + "\t<arxB>"
-						+ textField_1.getText() + "</arxB>\n" + "\t<arxG>" + textField_2.getText() + "</arxG>\n"
-						+ "\t<arxD>" + textField_13.getText() + "</arxD>\n" + "\t<anatheseis>" + textField_3.getText()
-						+ "</anatheseis>\n" + "\t<tmimata>" + textField_4.getText() + "</tmimata>\n" + "\t<out>"
-						+ textField_5.getText() + "</out>\n" + "\t<in>" + textField_6.getText() + "</in>\n"
-						+ "\t<sch_name>" + textField_7.getText() + "</sch_name>\n" + "\t<periodos>"
-						+ textField_8.getText() + "</periodos>\n" + "\t<sch_year>" + textField_14.getText()
-						+ "</sch_year>\n" + "\t<poli>" + textField_12.getText() + "</poli>\n" + "\t<date>"
-						+ textField_15.getText() + "</date>\n" + "\t<pass>" + textField_9.getText() + "</pass>\n"
-						+ "\t<prothema>" + textField_10.getText() + "</prothema>\n" + "</data>\n";
+
+				Properties props = new Properties();
+				props.setProperty("esperino", espvalue);
+				props.setProperty("arxA", textField.getText());
+				props.setProperty("arxB", textField_1.getText());
+				props.setProperty("arxG", textField_2.getText());
+				props.setProperty("arxD", textField_13.getText());
+				props.setProperty("anatheseis", textField_3.getText());
+				props.setProperty("tmimata", textField_4.getText());
+				props.setProperty("out", textField_5.getText());
+				props.setProperty("in", textField_6.getText());
+				props.setProperty("sch_name", textField_7.getText());
+				props.setProperty("periodos", textField_8.getText());
+				props.setProperty("sch_year", textField_14.getText());
+				props.setProperty("poli", textField_12.getText());
+				props.setProperty("date", textField_15.getText());
+				props.setProperty("pass", textField_9.getText());
+				props.setProperty("prothema", textField_10.getText());
 
 				try {
-					PrintWriter out = new PrintWriter(workdir + File.separator + ".bathmologia.conf");
-					out.write(data);
-					out.close();
+					InputStream in = getClass().getResourceAsStream("epikefalides.xml");
+					DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+					DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+					doc = docBuilder.parse(in);
+					configFile = doc.getElementsByTagName("configFile");
+
+					String newAppConfigXmlFile = workdir + File.separator + configFile.item(0).getTextContent();
+					props.storeToXML(new FileOutputStream(newAppConfigXmlFile), null);
+					
 				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				System.exit(0);
@@ -2991,98 +3033,95 @@ public class bathmologia_java extends JFrame {
 		 * contentPane.add(separator_6, gbc_separator_6);
 		 */
 		try {
-			File f = new File(workdir + File.separator + ".bathmologia.conf");
-			if (f.exists()) {
-				DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBdr = dBF.newDocumentBuilder();
-				Document doconf = dBdr.parse(f);
-
-				// normalize text representation
-				doconf.getDocumentElement().normalize();
-
-				NodeList esperinode = doconf.getElementsByTagName("esperino");
-				NodeList arxA = doconf.getElementsByTagName("arxA");
-				NodeList arxB = doconf.getElementsByTagName("arxB");
-				NodeList arxG = doconf.getElementsByTagName("arxG");
-				NodeList arxD = doconf.getElementsByTagName("arxD");
-				NodeList anatheseis = doconf.getElementsByTagName("anatheseis");
-				NodeList tmimata = doconf.getElementsByTagName("tmimata");
-				NodeList out = doconf.getElementsByTagName("out");
-				NodeList in = doconf.getElementsByTagName("in");
-				NodeList sch_name = doconf.getElementsByTagName("sch_name");
-				NodeList periodos = doconf.getElementsByTagName("periodos");
-				NodeList sch_year = doconf.getElementsByTagName("sch_year");
-				NodeList poli = doconf.getElementsByTagName("poli");
-				NodeList date = doconf.getElementsByTagName("date");
-				NodeList pass = doconf.getElementsByTagName("pass");
-				NodeList prothema = doconf.getElementsByTagName("prothema");
-
-				if (esperinode.item(0).getTextContent().equals("1"))
-					comboBox_2.setSelectedIndex(1);
-				textField.setText((String) arxA.item(0).getTextContent());
-				textField_1.setText((String) arxB.item(0).getTextContent());
-				textField_2.setText((String) arxG.item(0).getTextContent());
-				textField_13.setText((String) arxD.item(0).getTextContent());
-				textField_3.setText((String) anatheseis.item(0).getTextContent());
-				textField_4.setText((String) tmimata.item(0).getTextContent());
-				textField_5.setText((String) out.item(0).getTextContent());
-				textField_6.setText((String) in.item(0).getTextContent());
-				textField_7.setText((String) sch_name.item(0).getTextContent());
-				textField_8.setText((String) periodos.item(0).getTextContent());
-				textField_14.setText((String) sch_year.item(0).getTextContent());
-				textField_12.setText((String) poli.item(0).getTextContent());
-				textField_15.setText((String) date.item(0).getTextContent());
-				textField_9.setText((String) pass.item(0).getTextContent());
-				textField_10.setText((String) prothema.item(0).getTextContent());
-
-				if (!arxA.item(0).getTextContent().equals("")) {
-					File file = new File(arxA.item(0).getTextContent());
+			configFile = doc.getElementsByTagName("configFile");
+			
+			String configPath = workdir + File.separator + configFile.item(0).getTextContent();
+			Properties props = new Properties();
+			props.loadFromXML(new FileInputStream(configPath));
+			
+			String esperinode = props.getProperty("esperino");
+			String arxA = props.getProperty("arxA");
+			String arxB = props.getProperty("arxB");
+			String arxG = props.getProperty("arxG");
+			String arxD = props.getProperty("arxD");
+			String anatheseis = props.getProperty("anatheseis");
+			String tmimata = props.getProperty("tmimata");
+			String out = props.getProperty("out");
+			String in = props.getProperty("in");
+			String sch_name = props.getProperty("sch_name");
+			String periodos = props.getProperty("periodos");
+			String sch_year = props.getProperty("sch_year");
+			String poli = props.getProperty("poli");
+			String date = props.getProperty("date");
+			String pass = props.getProperty("pass");
+			String prothema = props.getProperty("prothema");
+			
+			if (esperinode.equals("1"))
+				comboBox_2.setSelectedIndex(1);
+			textField.setText(arxA);
+			textField_1.setText(arxB);
+			textField_2.setText(arxG);
+			textField_13.setText(arxD);
+			textField_3.setText(anatheseis);
+			textField_4.setText(tmimata);
+			textField_5.setText(out);
+			textField_6.setText(in);
+			textField_7.setText(sch_name);
+			textField_8.setText(periodos);
+			textField_14.setText(sch_year);
+			textField_12.setText(poli);
+			textField_15.setText(date);
+			textField_9.setText(pass);
+			textField_10.setText(prothema);
+			
+				if (!arxA.equals("")) {
+					File file = new File(arxA);
 					bathmologia_java.mydir = file.getParent();
 				}
 				if (bathmologia_java.mydir == null) {
-					if (!arxB.item(0).getTextContent().equals("")) {
-						File file = new File(arxB.item(0).getTextContent());
+					if (!arxB.equals("")) {
+						File file = new File(arxB);
 						bathmologia_java.mydir = file.getParent();
 					}
 				}
 				if (bathmologia_java.mydir == null) {
-					if (!arxG.item(0).getTextContent().equals("")) {
-						File file = new File(arxG.item(0).getTextContent());
+					if (!arxG.equals("")) {
+						File file = new File(arxG);
 						bathmologia_java.mydir = file.getParent();
 					}
 				}
 				if (bathmologia_java.mydir == null) {
-					if (!arxD.item(0).getTextContent().equals("")) {
-						File file = new File(arxD.item(0).getTextContent());
+					if (!arxD.equals("")) {
+						File file = new File(arxD);
 						bathmologia_java.mydir = file.getParent();
 					}
 				}
 				if (bathmologia_java.mydir == null) {
-					if (!anatheseis.item(0).getTextContent().equals("")) {
-						File file = new File(anatheseis.item(0).getTextContent());
+					if (!anatheseis.equals("")) {
+						File file = new File(anatheseis);
 						bathmologia_java.mydir = file.getParent();
 					}
 				}
 				if (bathmologia_java.mydir == null) {
-					if (!tmimata.item(0).getTextContent().equals("")) {
-						File file = new File(tmimata.item(0).getTextContent());
+					if (!tmimata.equals("")) {
+						File file = new File(tmimata);
 						bathmologia_java.mydir = file.getParent();
 					}
 				}
 				if (bathmologia_java.mydir == null) {
-					if (!out.item(0).getTextContent().equals("")) {
-						File file = new File(out.item(0).getTextContent());
+					if (!out.equals("")) {
+						File file = new File(out);
 						bathmologia_java.mydir = file.getParent();
 					}
 				}
 				if (bathmologia_java.mydir == null) {
-					if (!in.item(0).getTextContent().equals("")) {
-						File file = new File(in.item(0).getTextContent());
+					if (!in.equals("")) {
+						File file = new File(in);
 						bathmologia_java.mydir = file.getParent();
 					}
 				}
-			}
-		} catch (IOException | ParserConfigurationException | SAXException e) {
+			// }
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -3095,10 +3134,9 @@ public class bathmologia_java extends JFrame {
 
 		public ProgressWindow() {
 			frame = new JDialog();
-			frame.setTitle("GΘ@2015: ΠΡΟΟΔΟΣ...");
+			frame.setTitle("GΘ@2020: ΠΡΟΟΔΟΣ...");
 			frame.setSize(500, 110);
-			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-			GridBagLayout gridBagLayout = new GridBagLayout();
+			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);			GridBagLayout gridBagLayout = new GridBagLayout();
 			gridBagLayout.columnWidths = new int[] { 0 };
 			gridBagLayout.rowHeights = new int[] { 0, 0 };
 			gridBagLayout.columnWeights = new double[] { 0.0 };
